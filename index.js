@@ -26,14 +26,6 @@ function init() {
 
 function initialData() {
   requestsMade = 0;
-  totals = {
-    "loves": 0,
-    "favorites": 0,
-    "comments": 0,
-    "views": 0,
-    "liking": 0
-  };
-  lastProject = null;
   swal.fire({
     toast: true,
     position: "center",
@@ -61,7 +53,8 @@ function initialData() {
       "msgCount": 0,
       "browser": "?",
       "os": "?",
-      "status": ""
+      "status": "",
+      "lastProject": null
     },
     "activity": {
       "loves": 0,
@@ -183,7 +176,7 @@ async function loadProjects(offset) {
     if(res.length === limit) loadProjects(offset+limit);
 
     // Returned at least one project? Save last project ID
-    if(res.length !== 0) lastProject = res[res.length-1].id;
+    if(res.length !== 0) data.profile.lastProject = res[res.length-1].id;
 
     // No projects at all?
     if(res.length === 0 && offset === 0) requestMade();
@@ -194,7 +187,7 @@ async function loadProjects(offset) {
     res.forEach((project, index) => {
       project.stats.liking = (project.stats.loves/project.stats.views)*100;
       data.projects.push(project);
-      data.statNames.forEach((stat, index) => totals[stat] += project.stats[stat]);
+      data.statNames.forEach((stat, index) => data.totals[stat] += project.stats[stat]);
     });
     if(res.length !== limit) loadedProjects();
   }
@@ -202,9 +195,8 @@ async function loadProjects(offset) {
 
 function loadedProjects() {
   requestMade();
-  if(lastProject) getUserAgent();
+  if(data.profile.lastProject) getUserAgent();
   data.statNames.forEach((stat, index) => {
-    data.totals[stat] = totals[stat];
     const projectArray = data.projects.slice();
     projectArray.sort((a, b) => {
       return b.stats[stat] - a.stats[stat];
@@ -222,7 +214,7 @@ async function getMsgCount() {
 }
 
 async function getUserAgent() {
-  const req = await fetch(`https://projects.scratch.mit.edu/${lastProject}`);
+  const req = await fetch(`https://projects.scratch.mit.edu/${data.profile.lastProject}`);
   if (req.status === 200) {
     try {
       const res = await req.json();
