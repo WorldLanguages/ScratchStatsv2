@@ -15,12 +15,7 @@ function init() {
         Object.assign(this.$data, initialData());
       }
     },
-    created: () => {
-      if(location.pathname === "/") {
-        getStats(defaultUser, false);
-      } else
-      getStats(location.pathname.substring(1, 99), false, "default");
-    }
+    created: () => getStats(location.pathname.substring(1, 99), true, "default")
   });
 }
 
@@ -118,11 +113,11 @@ function changeUsername() {
 }
 
 async function getStats(username, pushHistory, onError) {
-  if(username === "") username = defaultUser;
+  if(username === "404.html") username = defaultUser;
   const req = await fetch(`https://api.scratchstats.com/scratch/users/${username}`);
-  if (req.status === 200) {
+  const res = await req.json();
+  if (!res.code) {
     if(data.loaded === true) data.reset();
-    const res = await req.json();
     data.user = res.username;
     if(pushHistory) history.pushState({}, "", data.user);
     data.id = res.id;
