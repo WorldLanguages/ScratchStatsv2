@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ScratchStats.com</title>
+  <meta name="description" content="Many statistics about Scratch users - most loved projects, total amount of views, comments per day, and more!">
+  <meta name="author" content="World_Languages">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F1F1F1">
+  <meta name="google-site-verification" content="obZDiZD_Qjmf_Y4zDY_mbiNcT1ITDsXY_xC3Mi-a_-o" />
+  <script>
+    if(location.hash) window.location = `/${location.hash.substring(1, 99)}`;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.0.3/dist/sweetalert2.all.min.js"></script>
+  <script src="vuecomponents.js"></script>
+  <script src="index.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="vuecomponents.css">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+
+<body onload="try { init(); } catch(err) { alert('Sorry, something went wrong.\n' + err); }">
+  <div id="app" v-show="loaded" style="display: none;">
+      <div id="user">
+        <div id="profile" onclick="changeUsername()">
+          <img id="profile-pic" :src="profile.profilePicUrl">
+          <div id="username">{{user}}</div>
+        </div>
+        <div id="buttons">
+          <div class="button" onclick="changeUsername()">🔃 Change user</div>
+          <div class="button" onclick="copyLink()">🔗 Copy link to stats</div>
+          <div class="button" onclick="window.open(`https://scratch.mit.edu/users/${data.user}`)">↗️ Go to Scratch profile</div>
+        </div>
+      </div>
+      <row title="Account information" key="account-info">
+        <stat :value="profile.joinDate">Join date (your timezone)</stat>
+        <stat :value="id" :title="n(id)">Account ID</stat>
+        <!-- Not using component because of stat value is an image (raw HTML) -->
+        <div class="stat" v-show="profile.countryCode" :title="profile.countryName">
+          <div class="stat-value"><img id="country-flag" :src="profile.countryCode ? `https://www.countryflags.io/${profile.countryCode}/shiny/64.png` : ''"></div>
+          <div class="stat-name">Country: {{profile.countryCode}}</div>
+        </div>
+        <stat :value="profile.msgCount">Unread messages</stat>
+        <stat :value="profile.browser">Possible browser</stat>
+        <stat :value="profile.os">Possible OS</stat>
+        <stat :value="profile.status">(New?) Scratcher / Scratch Team</stat>
+      </row>
+      <row title="Activity last 12 months" key="activity-12-months">
+        <stat :value="activity.projectsShared">Shared projects</stat>
+        <stat :value="activity.loves">❤️ projects</stat>
+        <stat :value="activity.favorites">⭐ projects</stat>
+        <stat :value="activity.usersFollowed">Followed users</stat>
+        <stat :value="activity.studiosCurated">Joined studios</stat>
+        <stat :value="activity.studiosFollowed">Followed studios</stat>
+      </row>
+      <row title="Recently ❤️ projects" key="loved-projects" v-show="activity.lovedProjects.length > 0" project-row-stat="lovedByUser" :show-load-more="projectRowShow.lovedByUser < activity.lovedProjects.length">
+        <project v-for="project in activity.lovedProjects.slice(0, projectRowShow.lovedByUser)" :key="`${project.id}-loved`" :project="project" :show-stats="false">
+        </project>
+      </row>
+      <div id="project-stats" v-show="projects.length > 0">
+        <row v-for="stat in statNames" :key="`sort-${stat}`" :project-row-stat="stat" :show-load-more="projectRowShow[stat] < projects.length" :title="`Most ${statEmojis[stat]} projects ${stat === 'liking' ? '(love/view ratio)' : ''}`">
+          <project v-for="project in projectsSorted[stat].slice(0, projectRowShow[stat])" :key="`${project.id}-sorted-${stat}`" :project="project" :sorted-by="stat" :show-stats="true">
+          </project>
+        </row>
+        <row title="Average stats per project" key="avg-stats">
+          <stat v-for="stat in statNames" :key="`avg-${stat}`" :value="n(totals[stat]/projects.length) + (stat === 'liking' ? '%' : '')" :emoji="true" :title="stat === 'liking' ? '% of viewers who loved the project' : ''">
+            {{statEmojis[stat]}}
+          </stat>
+        </row>
+        <row :title="`Total stats in all (${projects.length}) projects`" key="total-stats">
+          <stat v-for="stat in statNames" :key="`total-${stat}`" v-if="stat !== 'liking'" :value="n(totals[stat])" :emoji="true">
+            {{statEmojis[stat]}}
+          </stat>
+        </row>
+        <row v-for="period in periods" :title="`Average received per ${period.substring(0, period.length-1)}`" v-show="joined[period] > 3" :key="`period-avg-${period}`">
+          <stat v-for="stat in statNames" :key="`avg-${stat}-${period}`" v-if="stat !== 'liking'" :value="n(totals[stat]/joined[period])" :emoji="true">
+            {{statEmojis[stat]}}
+          </stat>
+        </row>
+      </div>
+  </div>
+</body>
+
+</html>
