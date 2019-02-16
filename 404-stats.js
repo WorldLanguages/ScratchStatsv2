@@ -90,7 +90,9 @@ function initialData() {
       "comments": 3,
       "liking": 3,
       "lovedByUser": 3 // "Recently loved projects" row
-    }
+    },
+
+    "exploreScratchers": []
   };
 }
 
@@ -267,6 +269,17 @@ async function getActivityData() {
   }
 }
 
+async function setScratchersToExplore() {
+  const req = await fetch(`https://api.scratchstats.com/scratch/explore/projects?limit=6&offset=${Math.round(Math.random()*(200-0)+0)}&language=en&mode=trending&q=*`);
+  const res = await req.json();
+  for(project of res) {
+    const scratcher = {};
+    scratcher.username = project.author.username;
+    scratcher.id = project.author.id;
+    data.exploreScratchers.push(scratcher);
+  }
+}
+
 //
 
 function requestMade() {
@@ -274,6 +287,7 @@ function requestMade() {
   if(requestsMade === 2) {
     swal.close();
     data.loaded = true;
+    setScratchersToExplore();
   }
 }
 

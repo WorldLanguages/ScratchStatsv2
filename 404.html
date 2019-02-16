@@ -17,6 +17,14 @@
   <script src="vuecomponents.js"></script>
   <script src="404-stats.js"></script>
   <script async src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81213477-3', 'auto');
+</script>
   <link rel="stylesheet" href="404-stats.css">
   <link rel="stylesheet" href="vuecomponents.css">
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
@@ -24,64 +32,71 @@
 
 <body onload="try { init(); } catch(err) { alert('Sorry, something went wrong.\n' + err); }">
   <div id="app" v-show="loaded" style="display: none;">
-      <div id="user">
-        <div id="profile" onclick="changeUsername()">
-          <img id="profile-pic" :src="profile.profilePicUrl">
-          <div id="username">{{user}}</div>
-        </div>
-        <div id="buttons">
-          <div class="button" onclick="changeUsername()">🔃 Change user</div>
-          <div class="button" onclick="copyLink()">🔗 Copy link to stats</div>
-          <div class="button" onclick="window.open(`https://scratch.mit.edu/users/${data.user}`)">↗️ Go to Scratch profile</div>
-        </div>
+    <div id="user">
+      <div id="profile" onclick="changeUsername()">
+        <img id="profile-pic" :src="profile.profilePicUrl">
+        <div id="username">{{user}}</div>
       </div>
-      <row title="Account information" key="account-info">
-        <stat :value="profile.joinDate">Join date (your timezone)</stat>
-        <stat :value="id" :title="n(id)">Account ID</stat>
-        <!-- Not using component because of stat value is an image (raw HTML) -->
-        <div class="stat" v-show="profile.countryCode" :title="profile.countryName">
-          <div class="stat-value"><img id="country-flag" :src="profile.countryCode ? `https://www.countryflags.io/${profile.countryCode}/shiny/64.png` : ''"></div>
-          <div class="stat-name">Country: {{profile.countryCode}}</div>
-        </div>
-        <stat :value="profile.msgCount">Unread messages</stat>
-        <stat :value="profile.browser">Possible browser</stat>
-        <stat :value="profile.os">Possible OS</stat>
-        <stat :value="profile.status">(New?) Scratcher / Scratch Team</stat>
-      </row>
-      <row title="Activity last 12 months" key="activity-12-months">
-        <stat :value="activity.projectsShared">Shared projects</stat>
-        <stat :value="activity.loves">❤️ projects</stat>
-        <stat :value="activity.favorites">⭐ projects</stat>
-        <stat :value="activity.usersFollowed">Followed users</stat>
-        <stat :value="activity.studiosCurated">Joined studios</stat>
-        <stat :value="activity.studiosFollowed">Followed studios</stat>
-      </row>
-      <row title="Recently ❤️ projects" key="loved-projects" v-show="activity.lovedProjects.length > 0" project-row-stat="lovedByUser" :show-load-more="projectRowShow.lovedByUser < activity.lovedProjects.length">
-        <project v-for="project in activity.lovedProjects.slice(0, projectRowShow.lovedByUser)" :key="`${project.id}-loved`" :project="project" :show-stats="false">
+      <div id="buttons">
+        <div class="button" onclick="changeUsername()">🔃 Change user</div>
+        <div class="button" onclick="copyLink()">🔗 Copy link to stats</div>
+        <div class="button" onclick="window.open(`https://scratch.mit.edu/users/${data.user}`)">↗️ Go to Scratch profile</div>
+      </div>
+    </div>
+    <row title="Account information" key="account-info">
+      <stat :value="profile.joinDate">Join date (your timezone)</stat>
+      <stat :value="id" :title="n(id)">Account ID</stat>
+      <!-- Not using component because of stat value is an image (raw HTML) -->
+      <div class="stat" v-show="profile.countryCode" :title="profile.countryName">
+        <div class="stat-value"><img id="country-flag" :src="profile.countryCode ? `https://www.countryflags.io/${profile.countryCode}/shiny/64.png` : ''"></div>
+        <div class="stat-name">Country: {{profile.countryCode}}</div>
+      </div>
+      <stat :value="profile.msgCount">Unread messages</stat>
+      <stat :value="profile.browser">Possible browser</stat>
+      <stat :value="profile.os">Possible OS</stat>
+      <stat :value="profile.status">(New?) Scratcher / Scratch Team</stat>
+    </row>
+    <row title="Activity last 12 months" key="activity-12-months">
+      <stat :value="activity.projectsShared">Shared projects</stat>
+      <stat :value="activity.loves">❤️ projects</stat>
+      <stat :value="activity.favorites">⭐ projects</stat>
+      <stat :value="activity.usersFollowed">Followed users</stat>
+      <stat :value="activity.studiosCurated">Joined studios</stat>
+      <stat :value="activity.studiosFollowed">Followed studios</stat>
+    </row>
+    <row title="Recently ❤️ projects" key="loved-projects" v-show="activity.lovedProjects.length > 0" project-row-stat="lovedByUser" :show-load-more="projectRowShow.lovedByUser < activity.lovedProjects.length">
+      <project v-for="project in activity.lovedProjects.slice(0, projectRowShow.lovedByUser)" :key="`${project.id}-loved`" :project="project" :show-stats="false">
+      </project>
+    </row>
+    <div id="project-stats" v-show="projects.length > 0">
+      <row v-for="stat in statNames" :key="`sort-${stat}`" :project-row-stat="stat" :show-load-more="projectRowShow[stat] < projects.length" :title="`Most ${statEmojis[stat]} projects ${stat === 'liking' ? '(love/view ratio)' : ''}`">
+        <project v-for="project in projectsSorted[stat].slice(0, projectRowShow[stat])" :key="`${project.id}-sorted-${stat}`" :project="project" :sorted-by="stat" :show-stats="true">
         </project>
       </row>
-      <div id="project-stats" v-show="projects.length > 0">
-        <row v-for="stat in statNames" :key="`sort-${stat}`" :project-row-stat="stat" :show-load-more="projectRowShow[stat] < projects.length" :title="`Most ${statEmojis[stat]} projects ${stat === 'liking' ? '(love/view ratio)' : ''}`">
-          <project v-for="project in projectsSorted[stat].slice(0, projectRowShow[stat])" :key="`${project.id}-sorted-${stat}`" :project="project" :sorted-by="stat" :show-stats="true">
-          </project>
-        </row>
-        <row title="Average stats per project" key="avg-stats">
-          <stat v-for="stat in statNames" :key="`avg-${stat}`" :value="n(totals[stat]/projects.length) + (stat === 'liking' ? '%' : '')" :emoji="true" :title="stat === 'liking' ? '% of viewers who loved the project' : ''">
-            {{statEmojis[stat]}}
-          </stat>
-        </row>
-        <row :title="`Total stats in all (${projects.length}) projects`" key="total-stats">
-          <stat v-for="stat in statNames" :key="`total-${stat}`" v-if="stat !== 'liking'" :value="n(totals[stat])" :emoji="true">
-            {{statEmojis[stat]}}
-          </stat>
-        </row>
-        <row v-for="period in periods" :title="`Average received per ${period.substring(0, period.length-1)}`" v-show="joined[period] > 3" :key="`period-avg-${period}`">
-          <stat v-for="stat in statNames" :key="`avg-${stat}-${period}`" v-if="stat !== 'liking'" :value="n(totals[stat]/joined[period])" :emoji="true">
-            {{statEmojis[stat]}}
-          </stat>
-        </row>
+      <row title="Average stats per project" key="avg-stats">
+        <stat v-for="stat in statNames" :key="`avg-${stat}`" :value="n(totals[stat]/projects.length) + (stat === 'liking' ? '%' : '')" :emoji="true" :title="stat === 'liking' ? '% of viewers who loved the project' : ''">
+          {{statEmojis[stat]}}
+        </stat>
+      </row>
+      <row :title="`Total stats in all (${projects.length}) projects`" key="total-stats">
+        <stat v-for="stat in statNames" :key="`total-${stat}`" v-if="stat !== 'liking'" :value="n(totals[stat])" :emoji="true">
+          {{statEmojis[stat]}}
+        </stat>
+      </row>
+      <row v-for="period in periods" :title="`Average received per ${period.substring(0, period.length-1)}`" v-show="joined[period] > 3" :key="`period-avg-${period}`">
+        <stat v-for="stat in statNames" :key="`avg-${stat}-${period}`" v-if="stat !== 'liking'" :value="n(totals[stat]/joined[period])" :emoji="true">
+          {{statEmojis[stat]}}
+        </stat>
+      </row>
+    </div>
+    <row title="Explore other Scratchers' stats" key="explore-scratchers">
+      <div class="stat" v-for="scratcher in exploreScratchers" style="cursor: pointer;" onclick="getStats(this.getElementsByClassName('stat-name')[0].innerText, true, 'alert');">
+        <div class="stat-value"><img class="explore-user-img" :src="`https://cdn2.scratch.mit.edu/get_image/user/${scratcher.id}_50x50.png`"></div>
+        <div class="stat-name">{{scratcher.username}}</div>
       </div>
+    </row>
   </div>
+  <div id="go-to-top" onclick="document.documentElement.scrollTop = 0;" title="Go to top">⬆️</button>
 </body>
 
 </html>

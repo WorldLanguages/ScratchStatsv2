@@ -67,6 +67,28 @@ img {
   margin: .5rem;
 }
 
+.explore-user {
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.explore-user-img {
+  align-self: center;
+  width: 5rem;
+  height: 5rem;
+}
+
+#go-to-top {
+  display: block;
+  position: fixed;
+  bottom: .5rem;
+  right: .5rem;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
 /*Mobile portrait*/
 @media screen and (max-width: 850px) and (max-aspect-ratio: 13/9) {
   html {
