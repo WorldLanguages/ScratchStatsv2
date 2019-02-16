@@ -238,7 +238,7 @@ async function getActivityData() {
     "studiosCurated": "became a curator of",
     "projectsShared": "shared the project"
   };
-  const req = await fetch(`https://cors-anywhere.herokuapp.com/?https://scratch.mit.edu/messages/ajax/user-activity/?user=${data.user}&max=1000000`);
+  const req = await fetch(`https://cors-anywhere.herokuapp.com/https://scratch.mit.edu/messages/ajax/user-activity/?user=${data.user}&max=1000000`);
   requestMade();
   if(req.status === 200) {
     const res = await req.text();
