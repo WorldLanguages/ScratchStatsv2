@@ -67,6 +67,11 @@ img {
   margin: .5rem;
 }
 
+#project-stats {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .explore-user {
   display: flex;
   flex-direction: column;
