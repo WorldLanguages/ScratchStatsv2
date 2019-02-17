@@ -94,7 +94,7 @@
         <div class="stat-value"><img class="explore-user-img" :src="`https://cdn2.scratch.mit.edu/get_image/user/${scratcher.id}_50x50.png`"></div>
         <div class="stat-name">{{scratcher.username}}</div>
       </div>
-      <div id="go-to-top" onclick="document.documentElement.scrollTop = 0;" title="Go to top">⬆️</button>
+      <div id="go-to-top" onclick="document.body.scrollTop = document.documentElement.scrollTop = 0;" title="Go to top">⬆️</button>
     </row>
   </div>
 </body>
