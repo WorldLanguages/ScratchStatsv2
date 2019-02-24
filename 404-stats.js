@@ -116,7 +116,7 @@ function changeUsername() {
 
 async function getStats(username, pushHistory, onError) {
   if(username === "404.html") username = defaultUser;
-  const req = await fetch(`https://api.scratchstats.com/scratch/users/${username}`);
+  const req = await fetch(`https://cors.io/?https://api.scratch.mit.edu/users/${username}`);
   const res = await req.json();
   if (!res.code) {
     if(data.loaded === true) data.reset();
@@ -165,7 +165,7 @@ async function getStats(username, pushHistory, onError) {
 
 async function loadProjects(offset) {
   const limit = 40;
-  const req = await fetch(`https://api.scratchstats.com/scratch/users/${data.user}/projects/?limit=${limit}&offset=${offset}`);
+  const req = await fetch(`https://cors.io/?https://api.scratch.mit.edu/users/${data.user}/projects/?limit=${limit}&offset=${offset}`);
   if(req.status === 200) {
     const res = await req.json();
 
@@ -203,7 +203,7 @@ function loadedProjects() {
 }
 
 async function getMsgCount() {
-  const req = await fetch(`https://api.scratchstats.com/scratch/users/${data.user}/messages/count`);
+  const req = await fetch(`https://cors.io/?https://api.scratch.mit.edu/users/${data.user}/messages/count`);
   if(req.status === 200) {
     const res = await req.json();
     data.profile.msgCount = res.count;
@@ -270,7 +270,7 @@ async function getActivityData() {
 }
 
 async function setScratchersToExplore() {
-  const req = await fetch(`https://api.scratchstats.com/scratch/explore/projects?limit=6&offset=${Math.round(Math.random()*(200-0)+0)}&language=en&mode=trending&q=*`);
+  const req = await fetch(`https://cors.io/?https://api.scratch.mit.edu/explore/projects?limit=6&offset=${Math.round(Math.random()*(200-0)+0)}&language=en&mode=trending&q=*`);
   const res = await req.json();
   for(project of res) {
     const scratcher = {};
