@@ -12,11 +12,13 @@
   <script>
     if(location.hash) window.location = `/${location.hash.substring(1, 99)}`;
   </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.0.3/dist/sweetalert2.all.min.js"></script>
   <script src="vuecomponents.js"></script>
   <script src="404-stats.js"></script>
   <script async src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -32,17 +34,35 @@
 
 <body onload="try { init(); } catch(err) { alert('Sorry, something went wrong.\n' + err); }">
   <div id="app" v-show="loaded" style="display: none;">
-    <div id="user">
-      <div id="profile" onclick="changeUsername()">
+    <center>
+      <div id="user-icon">
         <img id="profile-pic" :src="profile.profilePicUrl">
-        <div id="username">{{user}}</div>
       </div>
-      <div id="buttons">
-        <div class="button" onclick="changeUsername()">🔃 Change user</div>
-        <div class="button" onclick="copyLink()">🔗 Copy link to stats</div>
-        <div class="button" onclick="window.open(`https://scratch.mit.edu/users/${data.user}`)">↗️ Go to Scratch profile</div>
+      <div id="user-profile">
+        <div id="inner-user">
+          <div id="profile" onclick="changeUsername()">
+            <div class="heading" id="username">{{user}}</div>
+          </div>
+          <hr class="bb-white big-divide">  
+          <button type="button" onclick="changeUsername()" class="btn btn-labeled">
+              <span class="btn-label"><img class="button-icon" src="https://img.icons8.com/color/48/000000/businessman.png"></span>
+              <span class="btn-text">
+              Change User</span>
+          </button>
+          <button type="button" onclick="copyLink()" class="btn btn-labeled">
+              <span class="btn-label"><img class="button-icon" src="https://img.icons8.com/color/48/000000/clipboard.png"></span>
+              <span class="btn-text">
+              Copy URL</span>
+          </button>
+          <button type="button" onclick="window.open(`https://scratch.mit.edu/users/${data.user}`)" class="btn btn-labeled">
+              <span class="btn-label"><img class="button-icon" src="https://image.flaticon.com/icons/svg/919/919846.svg"></span>
+              <span class="btn-text">
+              Scratch URL</span>
+          </button>
+        </div>
       </div>
-    </div>
+    </center>
+    
     <row title="Account information" key="account-info">
       <stat :value="profile.joinDate">Join date (your timezone)</stat>
       <stat :value="id" :title="n(id)">Account ID</stat>
