@@ -54,7 +54,7 @@ img {
   margin-left: 15px;
   padding: 1rem;
   background-color: rgb(3, 161, 237);
-  border-radius: 100px;
+  border-radius: 40px;
   /* box-shadow: 0 4px 6px rgba(34,25,25,0.3); */
   margin-bottom: 3rem;
   text-align: center;
@@ -206,9 +206,36 @@ img {
   }
 }
 
+#icon {
+  display: none;
+}
 
-@media only screen and (max-width: 400px) {
-  
+#mobile-icon {
+  height: 60px; display: inline-block;
+}
+
+@media only screen and (max-width: 658px) {
+  #icon {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  #username {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  #user-icon {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 508px) {
+  .big-divide {
+    margin: 10px 100px;
+    margin-top: 0px;
+  }
+  .btn-label {
+    display: none;
+  }
 }
 
 /*Mobile portrait*/
