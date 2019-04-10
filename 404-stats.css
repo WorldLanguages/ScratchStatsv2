@@ -35,7 +35,9 @@ img {
 }
 
 #browser-icon {
-  width: 3rem;
+  width: 5rem;
+  border: 0.5rem solid rgb(77,177,225);
+  border-radius: 100px;
 }
 
 #inner-user {

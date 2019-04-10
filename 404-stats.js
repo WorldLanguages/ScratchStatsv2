@@ -220,6 +220,7 @@ async function getUserAgent() {
         const browser = new UAParser(userAgent).getBrowser();
         const os = new UAParser(userAgent).getOS();
         if(browser.name) data.profile.browser = browser.name;
+        if (browser.name == "Mobile Safari") data.profile.browser = "Safari";
         if(os.name) data.profile.os = `${os.name} ${os.version}`;
       }
     } catch(error) {
