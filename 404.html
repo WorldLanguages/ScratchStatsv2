@@ -72,7 +72,11 @@
         <div class="stat-name">Country: {{profile.countryCode}}</div>
       </div>
       <stat :value="profile.msgCount">Unread messages</stat>
-      <stat :value="profile.browser">Possible browser</stat>
+      <!-- Not using component because of stat value is an image (raw HTML) -->
+      <div class="stat" v-show="profile.browser" :title="profile.browser">
+        <div class="stat-value"><img id="browser-icon" :src="profile.browser.toLowerCase() ? `https://raw.githubusercontent.com/alrra/browser-logos/master/src/${profile.browser.toLowerCase()}/${profile.browser.toLowerCase()}.png` : ''"></div>
+        <div class="stat-name">Possible browser: {{profile.browser}}</div>
+      </div>
       <stat :value="profile.os">Possible OS</stat>
       <stat :value="profile.status">(New?) Scratcher / Scratch Team</stat>
     </row>

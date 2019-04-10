@@ -34,6 +34,10 @@ img {
   width: 3rem;
 }
 
+#browser-icon {
+  width: 3rem;
+}
+
 #inner-user {
   position: relative;
   top: 50%;

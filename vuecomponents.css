@@ -4,7 +4,7 @@
   width: 90vw;
   margin: 0 auto;
   padding-top: 1rem;
-  background-color: #3D6BFF;
+  background-color: rgb(3, 161, 237);
   border-radius: 1rem;
   box-shadow: 0 4px 6px rgba(34,25,25,0.3);
   margin-bottom: 1rem;
@@ -13,7 +13,7 @@
 
 .row-title {
   font-size: 2.5rem;
-  border-bottom: .1rem solid gray;
+  border-bottom: .2rem solid white;
 }
 
 .row-stats {
