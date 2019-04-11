@@ -47,6 +47,10 @@
   align-self: center;
 }
 
+.stats {
+  margin-left:4px;
+}
+
 .emoji {
   font-size: 2rem;
 }

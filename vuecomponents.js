@@ -1,7 +1,7 @@
 const componentsHTML = {
   "row": `
   <div class="row">
-    <div class="row-title">{{title}}</div>
+    <div class="row-title" v-html="title"></div>
     <div class="row-stats">
       <slot></slot>
     </div>
@@ -22,7 +22,7 @@ const componentsHTML = {
     <div class="project-info">
       <img class="project-thumbnail" :src="\`https://cdn2.scratch.mit.edu/get_image/project/\${project.id}_100x80.png\`" @click="openProject(project.id)">
       <div class="project-stats" v-if="showStats">
-        <div v-for="stat in statNames"><span class="project-stat-emoji">{{statEmojis[stat]}}</span> <span class="project-stat-value" :class="{ 'project-stat-bold' : sortedBy === stat }">{{n(project.stats[stat])}}<span v-if="stat === 'liking'">%</span></span>
+        <div class="stats" v-for="stat in statNames"><span class="fas fa-{statEmojis[stat]}">{{statEmojis[stat]}}</span> <span class="project-stat-value" :class="{ 'project-stat-bold' : sortedBy === stat }">{{n(project.stats[stat])}}<span v-if="stat === 'liking'">%</span></span>
         </div>
       </div>
     </div>

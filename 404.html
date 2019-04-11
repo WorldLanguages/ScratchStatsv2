@@ -85,34 +85,34 @@
     </row>
     <row title="Activity last 12 months" key="activity-12-months">
       <stat :value="activity.projectsShared">Shared projects</stat>
-      <stat :value="activity.loves">❤️ projects</stat>
-      <stat :value="activity.favorites">⭐ projects</stat>
+      <stat :value="activity.loves"><i class="fas fa-heart"></i> projects</stat>
+      <stat :value="activity.favorites"><i class="fas fa-star"></i> projects</stat>
       <stat :value="activity.usersFollowed">Followed users</stat>
       <stat :value="activity.studiosCurated">Joined studios</stat>
       <stat :value="activity.studiosFollowed">Followed studios</stat>
     </row>
-    <row title="Recently ❤️ projects" key="loved-projects" v-show="activity.lovedProjects.length > 0" project-row-stat="lovedByUser" :show-load-more="projectRowShow.lovedByUser < activity.lovedProjects.length">
+    <row title="Recently <i class='fas fa-heart'></i> projects" key="loved-projects" v-show="activity.lovedProjects.length > 0" project-row-stat="lovedByUser" :show-load-more="projectRowShow.lovedByUser < activity.lovedProjects.length">
       <project v-for="project in activity.lovedProjects.slice(0, projectRowShow.lovedByUser)" :key="`${project.id}-loved`" :project="project" :show-stats="false">
       </project>
     </row>
     <div id="project-stats" v-show="projects.length > 0">
-      <row v-for="stat in statNames" :key="`sort-${stat}`" :project-row-stat="stat" :show-load-more="projectRowShow[stat] < projects.length" :title="`Most ${statEmojis[stat]} projects ${stat === 'liking' ? '(love/view ratio)' : ''}`">
+      <row v-for="stat in statNames" :key="`sort-${stat}`" :project-row-stat="stat" :show-load-more="projectRowShow[stat] < projects.length" :title="`Most <i class='fas fa-${statEmojis[stat]}'>${statEmojis[stat]}</i> projects ${stat === 'liking' ? '(love/view ratio)' : ''}`">
         <project v-for="project in projectsSorted[stat].slice(0, projectRowShow[stat])" :key="`${project.id}-sorted-${stat}`" :project="project" :sorted-by="stat" :show-stats="true">
         </project>
       </row>
       <row title="Average stats per project" key="avg-stats">
         <stat v-for="stat in statNames" :key="`avg-${stat}`" :value="n(totals[stat]/projects.length) + (stat === 'liking' ? '%' : '')" :emoji="true" :title="stat === 'liking' ? '% of viewers who loved the project' : ''">
-          {{statEmojis[stat]}}
+          <i class="fas fa-{statEmojis[stat]}">{{statEmojis[stat]}}</i>
         </stat>
       </row>
       <row :title="`Total stats in all (${projects.length}) projects`" key="total-stats">
         <stat v-for="stat in statNames" :key="`total-${stat}`" v-if="stat !== 'liking'" :value="n(totals[stat])" :emoji="true">
-          {{statEmojis[stat]}}
+          <span class="fas fa-{statEmojis[stat]}">{{statEmojis[stat]}}</span>
         </stat>
       </row>
       <row v-for="period in periods" :title="`Average received per ${period.substring(0, period.length-1)}`" v-show="joined[period] > 3" :key="`period-avg-${period}`">
         <stat v-for="stat in statNames" :key="`avg-${stat}-${period}`" v-if="stat !== 'liking'" :value="n(totals[stat]/joined[period])" :emoji="true">
-          {{statEmojis[stat]}}
+          <span class="fas fa-{{statEmojis[stat]}}">{{statEmojis[stat]}}</span>
         </stat>
       </row>
     </div>

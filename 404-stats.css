@@ -61,6 +61,26 @@ img {
   display: inline-block;
 }
 
+.fa-heart {
+  color: red;
+}
+
+.fa-star {
+  color: yellow;
+}
+
+.fa-eye {
+  color: purple;
+}
+
+.fa-comments {
+  color: skyblue;
+}
+
+.fa-thumbs-up {
+  color: blue;
+}
+
 #profile {
   cursor: pointer;
 }

@@ -32,7 +32,7 @@ function initialData() {
   return {
     // Static data
     "statNames" : ["loves", "favorites", "views", "comments", "liking"],
-    "statEmojis" : {"loves": "❤️", "favorites": "⭐", "views": "👁️", "comments": "💬", "liking": "👍"},
+    "statEmojis" : {"loves": "heart", "favorites": "star", "views": "eye", "comments": "comments", "liking": "thumbs-up"},
     "statAdjs" : {"loves": "loved", "favorites": "faved", "views": "viewed", "comments": "commented", "liking": "liked"},
     "periods": ["days", "weeks", "months", "years"],
 
