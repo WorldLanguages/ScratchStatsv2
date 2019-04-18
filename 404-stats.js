@@ -238,7 +238,7 @@ async function getActivityData() {
     "studiosCurated": "became a curator of",
     "projectsShared": "shared the project"
   };
-  const req = await fetch(`https://api.scratchstats.cf/scratch/users/${data.user}/activity`);
+  const req = await fetch(`https://api.scratchstats.com/scratch/users/${data.user}/activity`);
   requestMade();
   if(req.status === 200) {
     const res = await req.text();
