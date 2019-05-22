@@ -239,6 +239,14 @@ img {
   margin-bottom: 10px;
 }
 
+#go-to-top {
+  border-radius: 100px;
+  background-color: rgb(77,177,225);
+  border: 2px solid white;
+  font-size: 50px;
+  width: 78px;
+}
+
 @media only screen and (max-width: 758px) {
   #icon {
     display: inline-block;
