@@ -52,6 +52,7 @@ img {
   width: 50vw;
   height: 12rem;
   margin-left: 15px;
+  margin-right: 15px;
   padding: 1rem;
   background-color: rgb(3, 161, 237);
   border-radius: 40px;
@@ -208,17 +209,18 @@ img {
 
 @media only screen and (max-width: 850px) {
   #username {
-    font-size: 30px;
+    font-size: 40px;
   }
   .button-icon {
     height: 20px;
   }
   .btn-text {
-    font-size: 15px;
+    font-size: 18px;
+    vertical-align: baseline;
   }
   #profile-pic {
-    height: 100px;
-    width: 100px;
+    height: 130px;
+    width: 130px;
   }
   #user-profile {
     width: auto;
@@ -231,10 +233,13 @@ img {
 }
 
 #mobile-icon {
-  height: 60px; display: inline-block;
+  height: 90px; 
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
-@media only screen and (max-width: 658px) {
+@media only screen and (max-width: 758px) {
   #icon {
     display: inline-block;
     margin-bottom: 10px;
@@ -246,16 +251,20 @@ img {
   #user-icon {
     display: none;
   }
+  #user-profile {
+    width: auto;
+    height: 190px;
+  }
 }
 
 @media only screen and (max-width: 508px) {
   .big-divide {
-    margin: 10px 100px;
+    margin: 20px 100px;
     margin-top: 0px;
   }
-  .btn-label {
+  /* .btn-label {
     display: none;
-  }
+  } */
 }
 
 /*Mobile portrait*/
@@ -272,6 +281,19 @@ img {
 @media screen and (max-width: 850px) and (min-aspect-ratio: 13/9) {
   html {
     font-size: 1.5vw;
+  }
+}
+
+/*Mobile landscape*/
+@media screen and (max-width: 575px) {
+  #user-profile {
+    height: 250px;
+  }
+}
+/*Mobile landscape*/
+@media screen and (max-width: 360px) {
+  #user-profile {
+    height: 300px;
   }
 }
 
