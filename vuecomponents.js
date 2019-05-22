@@ -11,7 +11,7 @@ const componentsHTML = {
   "stat": `
   <div class="stat">
     <div class="stat-value">{{value}}</div>
-    <div class="stat-name" :class="{'emoji': emoji}">
+    <div class="stat-name" :class="emoji">
       <slot></slot>
     </div>
   </div>
@@ -40,7 +40,7 @@ Vue.component("row", {
   template: componentsHTML.row
 });
 Vue.component("stat", {
-  props: ["value", "emoji"],
+  props: ["value",  "emoji"],
   template: componentsHTML.stat
 });
 Vue.component("project", {

@@ -102,17 +102,17 @@
       </row>
       <row title="Average stats per project" key="avg-stats">
         <stat v-for="stat in statNames" :key="`avg-${stat}`" :value="n(totals[stat]/projects.length) + (stat === 'liking' ? '%' : '')" :emoji="true" :title="stat === 'liking' ? '% of viewers who loved the project' : ''">
-          <i class="fas fa-{statEmojis[stat]}">{{statEmojis[stat]}}</i>
+          <span :class="`fas emoji fa-${statEmojis[stat]}`"></span>
         </stat>
       </row>
       <row :title="`Total stats in all (${projects.length}) projects`" key="total-stats">
         <stat v-for="stat in statNames" :key="`total-${stat}`" v-if="stat !== 'liking'" :value="n(totals[stat])" :emoji="true">
-          <span class="fas fa-{statEmojis[stat]}">{{statEmojis[stat]}}</span>
+          <span :class="`fas emoji fa-${statEmojis[stat]}`"></span>
         </stat>
       </row>
       <row v-for="period in periods" :title="`Average received per ${period.substring(0, period.length-1)}`" v-show="joined[period] > 3" :key="`period-avg-${period}`">
         <stat v-for="stat in statNames" :key="`avg-${stat}-${period}`" v-if="stat !== 'liking'" :value="n(totals[stat]/joined[period])" :emoji="true">
-          <span class="fas fa-{{statEmojis[stat]}}">{{statEmojis[stat]}}</span>
+          <span :class="`fas emoji fa-${statEmojis[stat]}`"></span>
         </stat>
       </row>
     </div>
