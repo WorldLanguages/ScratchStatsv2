@@ -121,9 +121,44 @@
   }
 }
 
+
 /*Mobile portrait*/
 @media screen and (max-width: 850px) and (max-aspect-ratio: 13/9) {
   .row-stats {
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .row-stats {
+    flex-direction: row;
+  }
+  .row-title {
+    font-size: 1.5rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+  }
+  .stat-name {
+    font-size: .5rem;
+  }
+  #country-flag {
+    width: 3rem;
+  }
+  #browser-icon {
+    width: 3rem;
+    border-width: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .row-title {
+    font-size: 2rem;
+  }
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  .stat-name {
+    font-size: 1rem;
   }
 }
