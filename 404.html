@@ -71,7 +71,7 @@
       <stat :value="id" :title="n(id)">Account ID</stat>
       <!-- Not using component because of stat value is an image (raw HTML) -->
       <div class="stat" v-show="profile.countryCode" :title="profile.countryName">
-        <div class="stat-value"><img id="country-flag" :src="profile.countryCode ? `https://www.countryflags.io/${profile.countryCode}/shiny/64.png` : ''"></div>
+        <div class="stat-value"><img id="country-flag" :src="profile.countryCode ? `https://www.countryflags.io/${profile.countryCode}/flat/64.png` : ''"></div>
         <div class="stat-name">Country: {{profile.countryCode}}</div>
       </div>
       <stat :value="profile.msgCount">Unread messages</stat>
