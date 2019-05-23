@@ -115,15 +115,22 @@
           <span :class="`fas emoji fa-${statEmojis[stat]}`"></span>
         </stat>
       </row>
+
     </div>
     <row title="Explore other Scratchers' stats" key="explore-scratchers">
       <div class="stat" v-for="scratcher in exploreScratchers" style="cursor: pointer;" onclick="getStats(this.getElementsByClassName('stat-name')[0].innerText, true, 'alert');">
         <div class="stat-value"><img class="explore-user-img" :src="`https://cdn2.scratch.mit.edu/get_image/user/${scratcher.id}_50x50.png`"></div>
         <div class="stat-name">{{scratcher.username}}</div>
       </div>
-      <div id="go-to-top" onclick="var i = setInterval(function() {document.body.scrollTop -=  52; document.documentElement.scrollTop -= 52;if(document.documentElement.scrollTop == 0) {clearInterval(i)}}, .25);" title="Go to top">⬆️</button>
+      <button id="go-to-top" onclick="var i = setInterval(function() {document.body.scrollTop -=  52; document.documentElement.scrollTop -= 52;if(document.documentElement.scrollTop == 0) {clearInterval(i)}}, .25);" title="Go to top">⬆️</button>
     </row>
+    <center>
+      <div style="color: black; margin: 20px; font-weight:500">
+        Icons from <a href="www.flaticon.com">www.flaticon.com</a>
+        <!-- ScratchStats.com was created by <a href="https://scratch.mit.edu/users/World_Languages">World_Languages</a> and <a href="https://scratch.mit.edu/users/PackersRuleGoPack">PackersRuleGoPack</a> using the <a href="https://en.scratch-wiki.info/wiki/Scratch_API_(2.0)">Scratch API</a>.-->
+      </div>
+    </center>
   </div>
-</body>
 
+</body>
 </html>
