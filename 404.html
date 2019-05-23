@@ -42,7 +42,7 @@
         <div id="inner-user">
           <div id="profile" onclick="changeUsername()">
             <div id="icon">
-              <img id="mobile-icon" src="https://cdn2.scratch.mit.edu/get_image/user/2755634_75x75.png">
+              <img id="mobile-icon" :src="profile.profilePicUrl">
             </div>
             <div class="heading" id="username">{{user}}</div>
           </div>
