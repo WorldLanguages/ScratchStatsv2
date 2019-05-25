@@ -104,6 +104,10 @@ img {
   flex-wrap: wrap;
 }
 
+#go-to-top:focus {
+  outline: none;
+}
+
 .button {
   display: inline;
   border-radius: 1rem;
